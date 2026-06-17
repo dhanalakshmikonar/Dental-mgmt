@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Patient Management</title>
+
+<style>
+
+body{
+font-family:Segoe UI,sans-serif;
+background:#f4f8fc;
+padding:20px;
+}
+
+header{
+background:#0077b6;
+color:white;
+padding:20px;
+text-align:center;
+border-radius:10px;
+}
+
+.container{
+display:flex;
+gap:20px;
+margin-top:20px;
+}
+
+.form-section,
+.details-section{
+background:white;
+padding:20px;
+border-radius:10px;
+box-shadow:0 2px 8px rgba(0,0,0,0.1);
+}
+
+.form-section{
+width:40%;
+}
+
+.details-section{
+width:60%;
+}
+
+input,select,textarea{
+width:100%;
+padding:10px;
+margin-top:8px;
+margin-bottom:12px;
+border:1px solid #ccc;
+border-radius:6px;
+}
+
+button{
+width:100%;
+padding:12px;
+background:#0077b6;
+color:white;
+border:none;
+border-radius:6px;
+cursor:pointer;
+}
+
+.patient-item{
+background:#eaf4ff;
+padding:10px;
+margin-top:8px;
+cursor:pointer;
+border-radius:6px;
+}
+
+.patient-item:hover{
+background:#d7ebff;
+}
+
+.info{
+margin-top:10px;
+}
+
+.back-btn{
+display:inline-block;
+margin-bottom:15px;
+padding:10px 15px;
+background:#28a745;
+color:white;
+text-decoration:none;
+border-radius:6px;
+}
+
+</style>
+</head>
+
+<body>
+
+<header>
+<h1>🦷 Patient Management</h1>
+</header>
+
+<br>
+
+<a href="indexes.html" class="back-btn">
+⬅ Back to Home
+</a>
+
+<div class="container">
+
+<!-- LEFT SIDE -->
+
+<div class="form-section">
+
+<h2>Patient Registration</h2>
+
+<input type="text" id="patientId" placeholder="Patient ID">
+
+<input type="text" id="patientName" placeholder="Patient Name">
+
+<input type="date" id="patientDob">
+
+<input type="number" id="patientAge" placeholder="Age">
+
+<select id="patientGender">
+<option>Select Gender</option>
+<option>Male</option>
+<option>Female</option>
+<option>Other</option>
+</select>
+
+<input type="text" id="patientPhone" placeholder="Phone Number">
+
+<textarea id="patientIssue" placeholder="Patient Issue"></textarea>
+
+<input type="text" id="patientTreatment" placeholder="Treatment">
+
+<input type="number" id="totalAmount" placeholder="Total Amount">
+
+<input type="number" id="paidAmount" placeholder="Paid Amount">
+
+<input type="number" id="dueAmount" placeholder="Due Amount">
+
+<button onclick="addPatient()">
+Register Patient
+</button>
+
+<h2 style="margin-top:25px;">
+Patient List
+</h2>
+
+<div id="patientList">
+
+
+</div>
+
+<!-- RIGHT SIDE -->
+
+<div class="details-section">
+
+<h2>Patient Details</h2>
+
+<div class="info">
+<b>Patient ID:</b>
+<span id="pid">Select Patient</span>
+</div>
+
+<div class="info">
+<b>Name:</b>
+<span id="pname">-</span>
+</div>
+
+<div class="info">
+<b>DOB:</b>
+<span id="pdob">-</span>
+</div>
+
+<div class="info">
+<b>Age:</b>
+<span id="page">-</span>
+</div>
+
+<div class="info">
+<b>Gender:</b>
+<span id="pgender">-</span>
+</div>
+
+<div class="info">
+<b>Phone:</b>
+<span id="pphone">-</span>
+</div>
+
+<div class="info">
+<b>Issue:</b>
+<span id="pissue">-</span>
+</div>
+
+<div class="info">
+<b>Treatment:</b>
+<span id="ptreatment">-</span>
+</div>
+
+<div class="info">
+<b>Total Amount:</b>
+₹<span id="ptotal">-</span>
+</div>
+
+<div class="info">
+<b>Paid Amount:</b>
+₹<span id="ppaid">-</span>
+</div>
+
+<div class="info">
+<b>Due Amount:</b>
+₹<span id="pdue">-</span>
+</div>
+
+</div>
+
+</div>
+
+<script>
+
+function showPatient(
+id,
+name,
+dob,
+age,
+gender,
+phone,
+issue,
+treatment,
+total,
+paid,
+due
+){
+
+document.getElementById("pid").innerText=id;
+document.getElementById("pname").innerText=name;
+document.getElementById("pdob").innerText=dob;
+document.getElementById("page").innerText=age;
+document.getElementById("pgender").innerText=gender;
+document.getElementById("pphone").innerText=phone;
+document.getElementById("pissue").innerText=issue;
+document.getElementById("ptreatment").innerText=treatment;
+document.getElementById("ptotal").innerText=total;
+document.getElementById("ppaid").innerText=paid;
+document.getElementById("pdue").innerText=due;
+
+}
+
+async function addPatient(){
+
+let patientData = {
+
+patientId: document.getElementById("patientId").value,
+name: document.getElementById("patientName").value,
+dob: document.getElementById("patientDob").value,
+age: document.getElementById("patientAge").value,
+gender: document.getElementById("patientGender").value,
+phone: document.getElementById("patientPhone").value,
+issue: document.getElementById("patientIssue").value,
+treatment: document.getElementById("patientTreatment").value,
+totalAmount: document.getElementById("totalAmount").value,
+paidAmount: document.getElementById("paidAmount").value,
+dueAmount: document.getElementById("dueAmount").value
+
+};
+
+try{
+
+let response = await fetch("/add-patient",{
+
+method:"POST",
+
+headers:{
+"Content-Type":"application/json"
+},
+
+body: JSON.stringify(patientData)
+
+});
+
+let result = await response.json();
+
+alert(result.message);
+
+}
+catch(error){
+
+console.log(error);
+
+alert("Error Saving Patient");
+
+}
+
+}
+async function loadPatients(){
+
+try{
+
+const response = await fetch("/patients");
+
+const patients = await response.json();
+
+const patientList = document.getElementById("patientList");
+
+patientList.innerHTML = "";
+
+patients.forEach(function(patient){
+
+const div = document.createElement("div");
+
+div.className = "patient-item";
+
+div.innerText = patient.name;
+
+div.onclick = function(){
+
+showPatient(
+
+patient.patientId,
+
+patient.name,
+
+patient.dob || "",
+
+patient.age || "",
+
+patient.gender || "",
+
+patient.phone || "",
+
+patient.issue || "",
+
+patient.treatment || "",
+
+patient.totalAmount || "",
+
+patient.paidAmount || "",
+
+patient.dueAmount || ""
+
+);
+
+};
+
+patientList.appendChild(div);
+
+});
+
+}catch(error){
+
+console.log(error);
+
+}
+
+}
+
+loadPatients();
+</script>
+
+</body>
+</html>

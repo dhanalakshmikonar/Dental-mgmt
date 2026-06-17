@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Appointment Management</title>
+
+<style>
+
+body{
+font-family:Segoe UI,sans-serif;
+background:#f4f8fc;
+padding:20px;
+}
+
+header{
+background:#0077b6;
+color:white;
+padding:20px;
+text-align:center;
+border-radius:10px;
+}
+
+.container{
+display:flex;
+gap:20px;
+margin-top:20px;
+}
+
+.form-section,
+.details-section{
+background:white;
+padding:20px;
+border-radius:10px;
+box-shadow:0 2px 8px rgba(0,0,0,0.1);
+}
+
+.form-section{
+width:40%;
+}
+
+.details-section{
+width:60%;
+}
+
+input,select,textarea{
+width:100%;
+padding:10px;
+margin-top:8px;
+margin-bottom:12px;
+border:1px solid #ccc;
+border-radius:6px;
+}
+
+button{
+width:100%;
+padding:12px;
+background:#0077b6;
+color:white;
+border:none;
+border-radius:6px;
+cursor:pointer;
+}
+
+.appointment-item{
+background:#eaf4ff;
+padding:10px;
+margin-top:8px;
+cursor:pointer;
+border-radius:6px;
+}
+
+.appointment-item:hover{
+background:#d7ebff;
+}
+
+.info{
+margin-top:10px;
+}
+
+.back-btn{
+display:inline-block;
+margin-bottom:15px;
+padding:10px 15px;
+background:#28a745;
+color:white;
+text-decoration:none;
+border-radius:6px;
+}
+
+</style>
+</head>
+
+<body>
+
+<header>
+<h1>📅 Appointment Management</h1>
+</header>
+
+<br>
+
+<a href="indexes.html" class="back-btn">
+⬅ Back to Home
+</a>
+
+<div class="container">
+
+<!-- LEFT SIDE -->
+
+<div class="form-section">
+
+<h2>Book Appointment</h2>
+
+<input type="text" id="appointmentId" placeholder="Appointment ID">
+
+<input type="text" id="patientId" placeholder="Patient ID">
+
+<input type="text" id="patientName" placeholder="Patient Name">
+
+<select id="doctorName">
+<option>Select Doctor</option>
+<option>Dr Piraveen</option>
+<option>Dr Nivedha</option>
+<option>Dr Indhukani</option>
+</select>
+
+<input type="date" id="appointmentDate">
+
+<input type="time" id="appointmentTime">
+
+<textarea id="reason" placeholder="Reason for Visit"></textarea>
+
+<select id="status">
+<option>Pending</option>
+<option>Confirmed</option>
+<option>Completed</option>
+</select>
+
+<button onclick="addAppointment()">
+Book Appointment
+</button>
+
+<h2 style="margin-top:25px;">
+Appointment List
+</h2>
+
+<div id="appointmentList">
+
+<div class="appointment-item"
+onclick="showAppointment(
+'A001',
+'P001',
+'Aarav',
+'Dr Piraveen',
+'2026-06-10',
+'10:00',
+'Tooth Pain',
+'Confirmed'
+)">
+Aarav - 10 Jun
+</div>
+
+</div>
+
+</div>
+
+<!-- RIGHT SIDE -->
+
+<div class="details-section">
+
+<h2>Appointment Details</h2>
+
+<div class="info"><b>Appointment ID:</b> <span id="aid">Select Appointment</span></div>
+
+<div class="info"><b>Patient ID:</b> <span id="pid">-</span></div>
+
+<div class="info"><b>Patient Name:</b> <span id="pname">-</span></div>
+
+<div class="info"><b>Doctor:</b> <span id="doctor">-</span></div>
+
+<div class="info"><b>Date:</b> <span id="date">-</span></div>
+
+<div class="info"><b>Time:</b> <span id="time">-</span></div>
+
+<div class="info"><b>Reason:</b> <span id="visitReason">-</span></div>
+
+<div class="info"><b>Status:</b> <span id="appointmentStatus">-</span></div>
+
+</div>
+
+</div>
+
+<script>
+
+function showAppointment(
+id,
+patientId,
+patientName,
+doctor,
+date,
+time,
+reason,
+status
+){
+
+document.getElementById("aid").innerText=id;
+document.getElementById("pid").innerText=patientId;
+document.getElementById("pname").innerText=patientName;
+document.getElementById("doctor").innerText=doctor;
+document.getElementById("date").innerText=date;
+document.getElementById("time").innerText=time;
+document.getElementById("visitReason").innerText=reason;
+document.getElementById("appointmentStatus").innerText=status;
+
+}
+
+async function addAppointment(){
+
+    const appointmentData = {
+
+        appointmentId: document.getElementById("appointmentId").value,
+        patientId: document.getElementById("patientId").value,
+        patientName: document.getElementById("patientName").value,
+        doctor: document.getElementById("doctorName").value,
+        date: document.getElementById("appointmentDate").value,
+        time: document.getElementById("appointmentTime").value,
+        reason: document.getElementById("reason").value,
+        status: document.getElementById("status").value
+
+    };
+
+    const response = await fetch("/add-appointment", {
+
+        method: "POST",
+
+        headers: {
+            "Content-Type": "application/json"
+        },
+
+        body: JSON.stringify(appointmentData)
+
+    });
+
+    const result = await response.json();
+
+    alert(result.message);
+
+    document.getElementById("appointmentId").value = "";
+    document.getElementById("patientId").value = "";
+    document.getElementById("patientName").value = "";
+    document.getElementById("doctorName").selectedIndex = 0;
+    document.getElementById("appointmentDate").value = "";
+    document.getElementById("appointmentTime").value = "";
+    document.getElementById("reason").value = "";
+    document.getElementById("status").selectedIndex = 0;
+
+    loadAppointments();
+
+}
+async function loadAppointments(){
+
+    const response = await fetch("/appointments");
+
+    const appointments = await response.json();
+
+    const appointmentList = document.getElementById("appointmentList");
+
+    appointmentList.innerHTML = "";
+
+    appointments.forEach(function(app){
+
+        const div = document.createElement("div");
+
+        div.className = "appointment-item";
+
+        div.innerText = app.patientName + " - " + app.date;
+
+        div.onclick = function(){
+
+            showAppointment(
+
+                app.appointmentId,
+                app.patientId,
+                app.patientName,
+                app.doctor,
+                app.date,
+                app.time,
+                app.reason,
+                app.status
+
+            );
+
+        };
+
+        appointmentList.appendChild(div);
+
+    });
+
+}
+
+loadAppointments();
+</script>
+
+</body>
+</html>

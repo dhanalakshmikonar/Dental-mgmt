@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Staff Management</title>
+
+<style>
+
+body{
+font-family:Segoe UI,sans-serif;
+background:#f4f8fc;
+padding:20px;
+}
+
+header{
+background:#0077b6;
+color:white;
+padding:20px;
+text-align:center;
+border-radius:10px;
+}
+
+.container{
+display:flex;
+gap:20px;
+margin-top:20px;
+}
+
+.form-section,
+.details-section{
+background:white;
+padding:20px;
+border-radius:10px;
+box-shadow:0 2px 8px rgba(0,0,0,0.1);
+}
+
+.form-section{
+width:40%;
+}
+
+.details-section{
+width:60%;
+}
+
+input,select{
+width:100%;
+padding:10px;
+margin-top:8px;
+margin-bottom:12px;
+border:1px solid #ccc;
+border-radius:6px;
+}
+
+button{
+width:100%;
+padding:12px;
+background:#0077b6;
+color:white;
+border:none;
+border-radius:6px;
+cursor:pointer;
+}
+
+.staff-item{
+background:#eaf4ff;
+margin-top:8px;
+cursor:pointer;
+border-radius:6px;
+}
+
+.staff-item:hover{
+background:#d7ebff;
+}
+
+.info{
+margin-top:10px;
+}
+
+.back-btn{
+display:inline-block;
+margin-bottom:15px;
+text-decoration:none;
+background:#28a745;
+color:white;
+padding:10px 15px;
+border-radius:8px;
+}
+
+
+</style>
+</head>
+
+<body>
+
+<header>
+<h1>👨‍⚕️ Staff Management</h1>
+</header>
+
+<a href="indexes.html" class="back-btn">
+⬅ Back to Home
+</a>
+
+<div class="container">
+
+<!-- LEFT SIDE -->
+
+<div class="form-section">
+
+
+<h2>Staff Registration</h2>
+
+<input type="text" id="staffId" placeholder="Staff ID">
+
+<input type="text" id="staffName" placeholder="Staff Name">
+
+<select id="staffRole">
+<option>Select Role</option>
+<option>Dentist</option>
+<option>Assistant Dentist</option>
+<option>Receptionist</option>
+<option>Nurse</option>
+<option>Clinic Coordinator</option>
+</select>
+
+<input type="text" id="staffPhone" placeholder="Phone Number">
+
+<input type="date" id="joiningDate">
+
+<button onclick="addStaff()">
+Register Staff
+</button>
+
+<h2 style="margin-top:25px;">
+Staff List
+</h2>
+
+<div id="staffList">
+
+</div>
+</div>
+
+<!-- RIGHT SIDE -->
+
+<div class="details-section">
+
+<h2>Staff Details</h2>
+
+<div class="info">
+<b>Staff ID:</b>
+<span id="sid">Select Staff</span>
+</div>
+
+<div class="info">
+<b>Name:</b>
+<span id="sname">-</span>
+</div>
+
+<div class="info">
+<b>Role:</b>
+<span id="srole">-</span>
+</div>
+
+<div class="info">
+<b>Phone:</b>
+<span id="sphone">-</span>
+</div>
+
+<div class="info">
+<b>Joining Date:</b>
+<span id="sjoin">-</span>
+</div>
+
+</div>
+
+</div>
+
+<script>
+
+function showStaff(id, name, role, phone, joining){
+
+    document.getElementById("sid").innerText = id;
+    document.getElementById("sname").innerText = name;
+    document.getElementById("srole").innerText = role;
+    document.getElementById("sphone").innerText = phone;
+    document.getElementById("sjoin").innerText = joining;
+
+}
+
+async function addStaff(){
+
+    const staffData = {
+
+        staffId: document.getElementById("staffId").value,
+        name: document.getElementById("staffName").value,
+        role: document.getElementById("staffRole").value,
+        phone: document.getElementById("staffPhone").value,
+        joiningDate: document.getElementById("joiningDate").value
+
+    };
+
+    const response = await fetch("/add-staff", {
+
+        method: "POST",
+
+        headers: {
+            "Content-Type": "application/json"
+        },
+
+        body: JSON.stringify(staffData)
+
+    });
+
+    const result = await response.json();
+
+    alert(result.message);
+
+    document.getElementById("staffId").value = "";
+    document.getElementById("staffName").value = "";
+    document.getElementById("staffRole").selectedIndex = 0;
+    document.getElementById("staffPhone").value = "";
+    document.getElementById("joiningDate").value = "";
+
+    loadStaff();
+
+}
+
+async function loadStaff(){
+
+    const response = await fetch("/staff");
+
+    const staff = await response.json();
+
+    const staffList = document.getElementById("staffList");
+
+    staffList.innerHTML = "";
+
+    staff.forEach(function(member){
+
+        const div = document.createElement("div");
+
+        div.className = "staff-item";
+
+        div.style.padding = "10px";
+
+        div.innerText = member.name;
+
+        div.onclick = function(){
+
+            showStaff(
+
+                member.staffId,
+                member.name,
+                member.role,
+                member.phone,
+                member.joiningDate
+
+            );
+
+        };
+
+        staffList.appendChild(div);
+
+    });
+
+}
+
+loadStaff();
+
+</script>
+
+</body>
+</html>
