@@ -45,7 +45,7 @@ app.post("/add-patient", async (req, res) => {
 
         await patients.insertOne(req.body);
 
-        res.send("Patient Saved Successfully");
+        res.json({ message: "Patient Saved Successfully" });
 
     }
 

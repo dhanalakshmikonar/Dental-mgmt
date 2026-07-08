@@ -1,220 +1,190 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>JAAW Pediatric Dental Clinic</title>
-
-<style>
-
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-font-family:'Segoe UI',sans-serif;
-}
-
-body{
-background:#f4f8fc;
-}
-
-/* Header */
-
-header{
-background:linear-gradient(135deg,#0096c7,#023e8a);
-color:white;
-text-align:center;
-padding:50px 20px;
-}
-
-header h1{
-font-size:45px;
-margin-bottom:10px;
-}
-
-header p{
-font-size:20px;
-}
-
-/* Navigation */
-
-nav{
-background:white;
-padding:15px;
-display:flex;
-justify-content:center;
-gap:20px;
-box-shadow:0 2px 10px rgba(0,0,0,0.1);
-}
-
-nav a{
-text-decoration:none;
-background:#0077b6;
-color:white;
-padding:12px 25px;
-border-radius:8px;
-transition:0.3s;
-}
-
-nav a:hover{
-background:#023e8a;
-}
-
-/* Hero Section */
-
-.hero{
-padding:60px;
-text-align:center;
-}
-
-.hero h2{
-font-size:36px;
-color:#023e8a;
-margin-bottom:20px;
-}
-
-.hero p{
-font-size:18px;
-color:#555;
-line-height:1.8;
-}
-
-/* About Section */
-
-.about{
-background:white;
-margin:30px;
-padding:30px;
-border-radius:15px;
-box-shadow:0 3px 10px rgba(0,0,0,0.1);
-}
-
-.about h2{
-color:#023e8a;
-margin-bottom:15px;
-}
-
-.about p{
-line-height:1.8;
-color:#444;
-}
-
-/* Services */
-
-.services{
-display:flex;
-justify-content:center;
-gap:20px;
-flex-wrap:wrap;
-padding:20px;
-}
-
-.card{
-background:white;
-width:250px;
-padding:25px;
-border-radius:15px;
-text-align:center;
-box-shadow:0 3px 10px rgba(0,0,0,0.1);
-}
-
-.card h3{
-color:#0077b6;
-margin-bottom:10px;
-}
-
-footer{
-margin-top:40px;
-background:#023e8a;
-color:white;
-text-align:center;
-padding:15px;
-}
-
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JAAW Pediatric Dental Clinic - Dashboard</title>
+    <!-- Font Awesome for modern icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Unified style.css -->
+    <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
 
-<header>
+<div class="app-container">
+    <!-- Sidebar Navigation -->
+    <div class="sidebar">
+        <div class="sidebar-brand">
+            <i class="fa-solid fa-tooth"></i>
+            <h2>JAAW Clinic</h2>
+        </div>
+        <ul class="sidebar-menu">
+            <li>
+                <a href="indexes.html" class="sidebar-link active">
+                    <i class="fa-solid fa-chart-line"></i> Dashboard
+                </a>
+            </li>
+            <li>
+                <a href="patient.html" class="sidebar-link">
+                    <i class="fa-solid fa-user-injured"></i> Patients
+                </a>
+            </li>
+            <li>
+                <a href="staff.html" class="sidebar-link">
+                    <i class="fa-solid fa-user-md"></i> Staff
+                </a>
+            </li>
+            <li>
+                <a href="appointments.html" class="sidebar-link">
+                    <i class="fa-solid fa-calendar-check"></i> Appointments
+                </a>
+            </li>
+            <li>
+                <a href="medicines.html" class="sidebar-link">
+                    <i class="fa-solid fa-pills"></i> Medicines
+                </a>
+            </li>
+        </ul>
+        <div class="sidebar-footer">
+            <a href="login.html" class="logout-btn">
+                <i class="fa-solid fa-right-from-bracket"></i> Logout
+            </a>
+        </div>
+    </div>
 
-<h1>🦷 JAAW Pediatric Dental Clinic</h1>
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Page Header -->
+        <div class="page-header">
+            <div class="page-title">
+                <h1>Dashboard</h1>
+                <p>Welcome back, Admin. Here is today's clinic summary.</p>
+            </div>
+            <div style="font-size: 14px; font-weight: 600; color: var(--text-muted);">
+                <i class="fa-regular fa-calendar-days" style="margin-right: 6px;"></i> <span id="current-date"></span>
+            </div>
+        </div>
 
-<p>Healthy Smiles Start Here</p>
+        <!-- Hero Section -->
+        <section class="hero-banner">
+            <h2>JAAW Pediatric Dental Clinic</h2>
+            <p>Providing specialized, high-quality dental care for children. Equipped with modern pediatric technology, experienced dentists, and a child-friendly environment to ensure healthy smiles start here.</p>
+        </section>
 
-</header>
+        <!-- Stats Grid -->
+        <section class="stats-grid">
+            <div class="stat-card" onclick="window.location.href='patient.html'" style="cursor: pointer;">
+                <div class="stat-icon blue">
+                    <i class="fa-solid fa-user-injured"></i>
+                </div>
+                <div class="stat-details">
+                    <h3>Total Patients</h3>
+                    <div class="value" id="count-patients">-</div>
+                </div>
+            </div>
 
-<nav>
+            <div class="stat-card" onclick="window.location.href='staff.html'" style="cursor: pointer;">
+                <div class="stat-icon indigo">
+                    <i class="fa-solid fa-user-md"></i>
+                </div>
+                <div class="stat-details">
+                    <h3>Active Staff</h3>
+                    <div class="value" id="count-staff">-</div>
+                </div>
+            </div>
 
-<a href="patient.html">Patients</a>
+            <div class="stat-card" onclick="window.location.href='appointments.html'" style="cursor: pointer;">
+                <div class="stat-icon emerald">
+                    <i class="fa-solid fa-calendar-check"></i>
+                </div>
+                <div class="stat-details">
+                    <h3>Appointments</h3>
+                    <div class="value" id="count-appointments">-</div>
+                </div>
+            </div>
 
-<a href="staff.html">staff</a>
+            <div class="stat-card" onclick="window.location.href='medicines.html'" style="cursor: pointer;">
+                <div class="stat-icon amber">
+                    <i class="fa-solid fa-triangle-exclamation"></i>
+                </div>
+                <div class="stat-details">
+                    <h3>Low/Expired Stock</h3>
+                    <div class="value" id="count-medicines">-</div>
+                </div>
+            </div>
+        </section>
 
-<a href="appointments.html">Appointments</a>
+        <!-- Dynamic Two Column Layout -->
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 32px; margin-top: 32px;">
+            <div class="card">
+                <h3 class="section-title">
+                    <i class="fa-solid fa-circle-info" style="color: var(--primary);"></i> About the Clinic
+                </h3>
+                <p style="line-height: 1.7; color: var(--text-muted); font-size: 15px;">
+                    JAAW Pediatric Dental Clinic focuses on delivering high-quality, gentle dental care for toddlers, children, and teens. Our clinic offers preventive care, cavity treatments, fluoride applications, regular dental check-ups, dental fillings, root canals, and emergency dentistry in a fun, comfortable, and anxiety-free space.
+                </p>
+            </div>
 
-<a href="medicines.html">Medicines</a>
-
-</nav>
-
-<section class="hero">
-
-<h2>Welcome to JAAW Pediatric Dental Clinic</h2>
-
-<p>
-Providing specialized dental care for children with
-modern technology, experienced dentists and
-a child-friendly environment.
-</p>
-
-</section>
-
-<section class="about">
-
-<h2>About Us</h2>
-
-<p>
-
-JAAW Pediatric Dental Clinic focuses on delivering
-high-quality dental care for children.
-
-Our clinic offers preventive care, cavity treatment,
-tooth cleaning, dental fillings, root canal procedures,
-and regular dental check-ups in a comfortable environment.
-
-</p>
-
-</section>
-
-<section class="services">
-
-<div class="card">
-<h3>👦 Patient Management</h3>
-<p>Register and manage patient records.</p>
+            <div class="card">
+                <h3 class="section-title">
+                    <i class="fa-solid fa-circle-nodes" style="color: var(--secondary);"></i> Quick Action Checklist
+                </h3>
+                <ul style="list-style: none; display: flex; flex-direction: column; gap: 14px; color: var(--text-muted); font-size: 14px; font-weight: 500;">
+                    <li><i class="fa-solid fa-check" style="color: var(--success); margin-right: 8px;"></i> Verify daily appointment scheduler</li>
+                    <li><i class="fa-solid fa-check" style="color: var(--success); margin-right: 8px;"></i> Register new patients and updates issues</li>
+                    <li><i class="fa-solid fa-check" style="color: var(--success); margin-right: 8px;"></i> Keep medicine stock above safety threshold (15 units)</li>
+                    <li><i class="fa-solid fa-check" style="color: var(--success); margin-right: 8px;"></i> Review staff duty assignments & roles</li>
+                </ul>
+            </div>
+        </div>
+    </main>
 </div>
 
-<div class="card">
-<h3>👨‍⚕️ Staff Management</h3>
-<p>Maintain staff details and responsibilities.</p>
-</div>
+<script>
+    // Set current date
+    const dateOptions = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+    document.getElementById("current-date").innerText = new Date().toLocaleDateString("en-US", dateOptions);
 
-<div class="card">
-<h3>📅 Appointments</h3>
-<p>Schedule and track appointments.</p>
-</div>
+    async function loadStats() {
+        try {
+            // Patients Count
+            const resPatients = await fetch("/patients");
+            if (resPatients.ok) {
+                const patients = await resPatients.json();
+                document.getElementById("count-patients").innerText = patients.length;
+            }
 
-<div class="card">
-<h3>💊 Medicine Stock</h3>
-<p>Monitor medicine inventory and expiry dates.</p>
-</div>
+            // Staff Count
+            const resStaff = await fetch("/staff");
+            if (resStaff.ok) {
+                const staff = await resStaff.json();
+                document.getElementById("count-staff").innerText = staff.length;
+            }
 
-</section>
+            // Appointments Count
+            const resAppointments = await fetch("/appointments");
+            if (resAppointments.ok) {
+                const appointments = await resAppointments.json();
+                document.getElementById("count-appointments").innerText = appointments.length;
+            }
 
-<footer>
+            // Medicines Low/Expired Count
+            const resMedicines = await fetch("/medicines");
+            if (resMedicines.ok) {
+                const medicines = await resMedicines.json();
+                const alertItems = medicines.filter(med => {
+                    const isLowStock = parseInt(med.stock) < 15;
+                    const isExpired = med.expiry ? new Date(med.expiry) < new Date() : false;
+                    return isLowStock || isExpired;
+                });
+                document.getElementById("count-medicines").innerText = alertItems.length;
+            }
+        } catch (error) {
+            console.error("Error loading dashboard statistics:", error);
+        }
+    }
 
-© 2026 JAAW Pediatric Dental Clinic
-
-</footer>
-
+    loadStats();
+</script>
 </body>
 </html>

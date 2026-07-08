@@ -1,314 +1,347 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>Medicine Stock Management</title>
-
-<style>
-
-body{
-font-family:Segoe UI,sans-serif;
-background:#f4f8fc;
-padding:20px;
-}
-
-header{
-background:#0077b6;
-color:white;
-padding:20px;
-text-align:center;
-border-radius:10px;
-}
-
-.container{
-display:flex;
-gap:20px;
-margin-top:20px;
-}
-
-.form-section,
-.details-section{
-background:white;
-padding:20px;
-border-radius:10px;
-box-shadow:0 2px 8px rgba(0,0,0,0.1);
-}
-
-.form-section{
-width:40%;
-}
-
-.details-section{
-width:60%;
-}
-
-input,textarea{
-width:100%;
-padding:10px;
-margin-top:8px;
-margin-bottom:12px;
-border:1px solid #ccc;
-border-radius:6px;
-}
-
-button{
-width:100%;
-padding:12px;
-background:#0077b6;
-color:white;
-border:none;
-border-radius:6px;
-cursor:pointer;
-}
-
-button:hover{
-background:#023e8a;
-}
-
-table{
-width:100%;
-border-collapse:collapse;
-margin-top:15px;
-}
-
-table,th,td{
-border:1px solid #ccc;
-}
-
-th{
-background:#0077b6;
-color:white;
-}
-
-th,td{
-padding:10px;
-text-align:center;
-}
-
-.medicine-row{
-cursor:pointer;
-}
-
-.medicine-row:hover{
-background:#eaf4ff;
-}
-
-.info{
-margin-top:10px;
-}
-
-.back-btn{
-display:inline-block;
-margin-bottom:15px;
-padding:10px 15px;
-background:#28a745;
-color:white;
-text-decoration:none;
-border-radius:6px;
-}
-
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JAAW Clinic - Medicine Stock Management</title>
+    <!-- Font Awesome for modern icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Unified style.css -->
+    <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
 
-<header>
-<h1>💊 Medicine Stock Management</h1>
-</header>
+<div class="app-container">
+    <!-- Sidebar Navigation -->
+    <div class="sidebar">
+        <div class="sidebar-brand">
+            <i class="fa-solid fa-tooth"></i>
+            <h2>JAAW Clinic</h2>
+        </div>
+        <ul class="sidebar-menu">
+            <li>
+                <a href="indexes.html" class="sidebar-link">
+                    <i class="fa-solid fa-chart-line"></i> Dashboard
+                </a>
+            </li>
+            <li>
+                <a href="patient.html" class="sidebar-link">
+                    <i class="fa-solid fa-user-injured"></i> Patients
+                </a>
+            </li>
+            <li>
+                <a href="staff.html" class="sidebar-link">
+                    <i class="fa-solid fa-user-md"></i> Staff
+                </a>
+            </li>
+            <li>
+                <a href="appointments.html" class="sidebar-link">
+                    <i class="fa-solid fa-calendar-check"></i> Appointments
+                </a>
+            </li>
+            <li>
+                <a href="medicines.html" class="sidebar-link active">
+                    <i class="fa-solid fa-pills"></i> Medicines
+                </a>
+            </li>
+        </ul>
+        <div class="sidebar-footer">
+            <a href="login.html" class="logout-btn">
+                <i class="fa-solid fa-right-from-bracket"></i> Logout
+            </a>
+        </div>
+    </div>
 
-<br>
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Page Header -->
+        <div class="page-header">
+            <div class="page-title">
+                <h1>Medicine Stock Management</h1>
+                <p>Track clinic pharmacy inventory, update weekly batches, and review expiry schedules.</p>
+            </div>
+        </div>
 
-<a href="indexes.html" class="back-btn">
-⬅ Back to Home
-</a>
+        <!-- Legend / Overview Cards -->
+        <div style="display: flex; gap: 16px; margin-bottom: 24px;">
+            <div class="badge badge-danger" style="padding: 8px 16px; display: inline-flex; align-items: center; gap: 8px;">
+                <i class="fa-solid fa-triangle-exclamation"></i> Expired Medicine (Red)
+            </div>
+            <div class="badge badge-warning" style="padding: 8px 16px; display: inline-flex; align-items: center; gap: 8px;">
+                <i class="fa-solid fa-circle-exclamation"></i> Low Stock &lt; 15 units (Amber)
+            </div>
+        </div>
 
-<div class="container">
+        <div class="management-container">
+            <!-- Left Side: Weekly Stock Update Form -->
+            <div class="card">
+                <h3 class="section-title">
+                    <i class="fa-solid fa-box-archive" style="color: var(--primary);"></i> Weekly Stock Update
+                </h3>
+                
+                <div class="form-group">
+                    <label for="medicineName">Medicine Name</label>
+                    <input type="text" id="medicineName" placeholder="e.g. Paracetamol Syrup">
+                </div>
 
-<!-- LEFT SIDE -->
+                <div class="form-group">
+                    <label for="stockQty">Stock Quantity</label>
+                    <input type="number" id="stockQty" placeholder="e.g. 50">
+                </div>
 
-<div class="form-section">
+                <div class="form-group">
+                    <label for="updateDate">Last Updated Date</label>
+                    <input type="date" id="updateDate">
+                </div>
 
-<h2>Weekly Stock Update</h2>
+                <div class="form-group">
+                    <label for="expiryDate">Expiry Date</label>
+                    <input type="date" id="expiryDate">
+                </div>
 
-<input type="text" id="medicineName" placeholder="Medicine Name">
+                <div class="form-group">
+                    <label for="notes">Notes / Special Storage</label>
+                    <textarea id="notes" rows="3" placeholder="e.g. Keep refrigerated below 8°C"></textarea>
+                </div>
 
-<input type="number" id="stockQty" placeholder="Stock Quantity">
+                <button onclick="addMedicine()" class="btn btn-primary">
+                    <i class="fa-solid fa-circle-plus"></i> Update Stock
+                </button>
+            </div>
 
-<label>Last Updated Date</label>
-<input type="date" id="updateDate">
+            <!-- Right Side: Inventory List and Detailed panel -->
+            <div style="display: flex; flex-direction: column; gap: 32px;">
+                <!-- Medicine Stock Table -->
+                <div class="card">
+                    <h3 class="section-title">
+                        <i class="fa-solid fa-prescription-bottle-medical" style="color: var(--secondary);"></i> Medicine Inventory
+                    </h3>
+                    
+                    <div class="search-wrapper">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                        <input type="text" id="searchMedicine" onkeyup="filterMedicines()" placeholder="Search medicine name...">
+                    </div>
 
-<label>Expiry Date</label>
-<input type="date" id="expiryDate">
+                    <div class="table-wrapper">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Medicine Name</th>
+                                    <th>Stock</th>
+                                    <th>Last Updated</th>
+                                    <th>Expiry Date</th>
+                                </tr>
+                            </thead>
+                            <tbody id="medicineTable">
+                                <!-- Medicine table rows will load here -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
 
-<textarea id="notes" placeholder="Notes"></textarea>
+                <!-- Medicine Details Panel -->
+                <div class="card" id="medicineDetailsSection" style="display: none;">
+                    <h3 class="section-title">
+                        <i class="fa-solid fa-flask" style="color: var(--success);"></i> Batch Specifications
+                    </h3>
+                    <div class="details-panel">
+                        <div class="details-grid">
+                            <div class="detail-item full-width">
+                                <div class="detail-label">Medicine Name</div>
+                                <div class="detail-value highlight" id="mname">-</div>
+                            </div>
+                            <div class="detail-item">
+                                <div class="detail-label">Current Stock</div>
+                                <div class="detail-value" id="mstock">-</div>
+                            </div>
+                            <div class="detail-item">
+                                <div class="detail-label">Last Updated</div>
+                                <div class="detail-value" id="mupdate">-</div>
+                            </div>
+                            <div class="detail-item">
+                                <div class="detail-label">Expiry Status</div>
+                                <div class="detail-value">
+                                    <span id="mexpiryBadge" class="badge">Valid</span>
+                                </div>
+                            </div>
+                            <div class="detail-item">
+                                <div class="detail-label">Expiry Date</div>
+                                <div class="detail-value" id="mexpiry">-</div>
+                            </div>
+                            <div class="detail-item full-width" style="border-bottom: none;">
+                                <div class="detail-label">Notes & Storage Recommendations</div>
+                                <div class="detail-value" id="mnotes">-</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
-<button onclick="addMedicine()">
-Update Stock
-</button>
-
-</div>
-
-<!-- RIGHT SIDE -->
-
-<div class="details-section">
-
-<h2>Medicine Stock Table</h2>
-
-<table>
-
-<thead>
-<tr>
-<th>Medicine Name</th>
-<th>Stock</th>
-<th>Updated</th>
-<th>Expiry</th>
-</tr>
-</thead>
-
-<tbody id="medicineTable">
-
-
-</tbody>
-
-</table>
-
-<hr><br>
-
-<h2>Medicine Details</h2>
-
-<div class="info">
-<b>Medicine Name:</b>
-<span id="mname">Select Medicine</span>
-</div>
-
-<div class="info">
-<b>Stock Quantity:</b>
-<span id="mstock">-</span>
-</div>
-
-<div class="info">
-<b>Last Updated:</b>
-<span id="mupdate">-</span>
-</div>
-
-<div class="info">
-<b>Expiry Date:</b>
-<span id="mexpiry">-</span>
-</div>
-
-<div class="info">
-<b>Notes:</b>
-<span id="mnotes">-</span>
-</div>
-
-</div>
-
+                <!-- Placeholder if no medicine selected -->
+                <div class="card" id="noSelectionPlaceholder" style="text-align: center; padding: 40px; color: var(--text-muted);">
+                    <i class="fa-solid fa-pills" style="font-size: 48px; margin-bottom: 16px; color: #cbd5e1;"></i>
+                    <p style="font-weight: 600;">Select a medicine from the stock table to view details and notes.</p>
+                </div>
+            </div>
+        </div>
+    </main>
 </div>
 
 <script>
+// Cache the list of medicines
+let allMedicines = [];
 
-function showMedicine(
-name,
-stock,
-updated,
-expiry,
-notes
-){
+function showMedicine(name, stock, updated, expiry, notes) {
+    document.getElementById("noSelectionPlaceholder").style.display = "none";
+    document.getElementById("medicineDetailsSection").style.display = "block";
 
-document.getElementById("mname").innerText=name;
-document.getElementById("mstock").innerText=stock;
-document.getElementById("mupdate").innerText=updated;
-document.getElementById("mexpiry").innerText=expiry;
-document.getElementById("mnotes").innerText=notes;
+    document.getElementById("mname").innerText = name;
+    document.getElementById("mstock").innerText = stock + " units";
+    document.getElementById("mupdate").innerText = updated || "Not set";
+    document.getElementById("mexpiry").innerText = expiry || "Not set";
+    document.getElementById("mnotes").innerText = notes || "No special instructions";
 
+    // Determine status badge
+    const expiryBadge = document.getElementById("mexpiryBadge");
+    const stockQty = parseInt(stock) || 0;
+    const expDate = expiry ? new Date(expiry) : null;
+    const today = new Date();
+    
+    if (expDate && expDate < today) {
+        expiryBadge.innerText = "EXPIRED";
+        expiryBadge.className = "badge badge-danger";
+    } else if (stockQty < 15) {
+        expiryBadge.innerText = "LOW STOCK";
+        expiryBadge.className = "badge badge-warning";
+    } else {
+        expiryBadge.innerText = "ADEQUATE";
+        expiryBadge.className = "badge badge-success";
+    }
 }
 
-async function addMedicine(){
-
+async function addMedicine() {
     const medicineData = {
-
-        medicineName: document.getElementById("medicineName").value,
+        medicineName: document.getElementById("medicineName").value.trim(),
         stock: document.getElementById("stockQty").value,
         updated: document.getElementById("updateDate").value,
         expiry: document.getElementById("expiryDate").value,
-        notes: document.getElementById("notes").value
-
+        notes: document.getElementById("notes").value.trim()
     };
-    console.log(medicineData);
-    const response = await fetch("/add-medicine", {
 
-        method: "POST",
+    if (!medicineData.medicineName || !medicineData.stock) {
+        alert("Medicine Name and Stock Quantity are required.");
+        return;
+    }
 
-        headers:{
-            "Content-Type":"application/json"
-        },
+    try {
+        const response = await fetch("/add-medicine", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(medicineData)
+        });
 
-        body: JSON.stringify(medicineData)
+        const result = await response.json();
+        alert(result.message || "Stock updated successfully!");
 
-    });
+        // Clear fields
+        document.getElementById("medicineName").value = "";
+        document.getElementById("stockQty").value = "";
+        document.getElementById("updateDate").value = "";
+        document.getElementById("expiryDate").value = "";
+        document.getElementById("notes").value = "";
 
-    const result = await response.json();
-
-    alert(result.message);
-
-    document.getElementById("medicineName").value="";
-    document.getElementById("stockQty").value="";
-    document.getElementById("updateDate").value="";
-    document.getElementById("expiryDate").value="";
-    document.getElementById("notes").value="";
-
-    loadMedicines();
-
+        // Reload data
+        loadMedicines();
+    } catch (error) {
+        console.error(error);
+        alert("Error saving medicine");
+    }
 }
-async function loadMedicines(){
 
-    const response = await fetch("/medicines");
+async function loadMedicines() {
+    try {
+        const response = await fetch("/medicines");
+        allMedicines = await response.json();
+        displayMedicines(allMedicines);
+    } catch (error) {
+        console.error("Error loading medicines:", error);
+    }
+}
 
-    const medicines = await response.json();
+function displayMedicines(medicines) {
+    const tableBody = document.getElementById("medicineTable");
+    tableBody.innerHTML = "";
 
-    const table = document.getElementById("medicineTable");
+    if (medicines.length === 0) {
+        tableBody.innerHTML = `<tr><td colspan="4" style="text-align: center; color: var(--text-muted);">No medicines in inventory</td></tr>`;
+        return;
+    }
 
-    table.innerHTML = "";
+    const today = new Date();
 
-    medicines.forEach(function(medicine){
-
+    medicines.forEach(function(medicine) {
         const row = document.createElement("tr");
+        row.className = "table-row-hover";
 
-        row.className = "medicine-row";
+        // Determine stock count and expiration for coloring row
+        const stockQty = parseInt(medicine.stock) || 0;
+        const expiryDate = medicine.expiry ? new Date(medicine.expiry) : null;
+        
+        let rowClass = "";
+        if (expiryDate && expiryDate < today) {
+            rowClass = "expired";
+        } else if (stockQty < 15) {
+            rowClass = "low-stock";
+        }
+        
+        if (rowClass) {
+            row.classList.add(rowClass);
+        }
 
         row.innerHTML = `
-
-            <td>${medicine.medicineName}</td>
-            <td>${medicine.stock}</td>
-            <td>${medicine.updated}</td>
-            <td>${medicine.expiry}</td>
-
+            <td style="font-weight: 700;">${medicine.medicineName}</td>
+            <td>
+                ${medicine.stock} 
+                ${stockQty < 15 ? '<i class="fa-solid fa-triangle-exclamation" style="color: var(--warning); margin-left: 6px;"></i>' : ''}
+            </td>
+            <td>${medicine.updated || 'N/A'}</td>
+            <td>
+                ${medicine.expiry || 'N/A'}
+                ${(expiryDate && expiryDate < today) ? '<span class="badge badge-danger" style="margin-left: 6px; font-size: 9px;">EXP</span>' : ''}
+            </td>
         `;
 
-        row.onclick = function(){
-
+        row.onclick = function() {
             showMedicine(
-
                 medicine.medicineName,
                 medicine.stock,
                 medicine.updated,
                 medicine.expiry,
                 medicine.notes
-
             );
-
         };
 
-        table.appendChild(row);
-
+        tableBody.appendChild(row);
     });
-
 }
 
-loadMedicines();
+function filterMedicines() {
+    const query = document.getElementById("searchMedicine").value.toLowerCase().trim();
+    if (!query) {
+        displayMedicines(allMedicines);
+        return;
+    }
 
+    const filtered = allMedicines.filter(medicine => {
+        return medicine.medicineName.toLowerCase().includes(query);
+    });
+
+    displayMedicines(filtered);
+}
+
+// Initial Load
+loadMedicines();
 </script>
 
 </body>
